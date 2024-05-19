@@ -18,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.menkaix.hypermanager.models.FullProjectDTO;
 import com.menkaix.hypermanager.models.Project;
 
 
@@ -48,21 +49,25 @@ public class ProjectService {
 		return client;
 	}
 
-	public String getTree(String project) {
+	public FullProjectDTO getTree(String project) {
 
 		try {
 
 			String ans = client().get().uri("project-command/{project}/tree", project).retrieve()
 					.bodyToMono(String.class).block();
 
-			return ans;
+			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
+			
+			FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
+			
+			return objAns;
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return "error getting tree";
+		return null;
 	}
 	
 	

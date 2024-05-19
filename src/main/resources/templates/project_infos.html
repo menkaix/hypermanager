@@ -21,11 +21,13 @@
 		</p>
 	</form>
 
+<div>
+<h1 th:text="${tree.name}"></h1>
+<div th:text="${tree.description}"></div>
+<div th:text="${#temporals.formatISO(tree.creationDate)}"></div>
 
-	<div>
-		<textarea class="form-control" id="description" rows="5"
-			name="description" placeholder="Description" th:text="${tree}"
-			required="required"></textarea>
-	</div>
+</div>
+
+	
 </body>
 </html>
