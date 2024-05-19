@@ -21,13 +21,19 @@
 		</p>
 	</form>
 
-<div>
-<h1 th:text="${tree.name}"></h1>
-<div th:text="${tree.description}"></div>
-<div th:text="${#temporals.formatISO(tree.creationDate)}"></div>
+	<div>
+		<h1 th:text="${tree.name}"></h1>
+		<div th:text="${tree.description}"></div>
+		<div th:text="${#dates.formatISO(tree.creationDate)}"></div>
+		<div>
+			<div th:each="actor : ${tree.actors}">
+				<h2 th:text="${actor.name}"></h2>
+				<ul th:each="story : ${actor.stories}">
+					<li th:text="|${story.action} : ${story.scenario}|"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-</div>
-
-	
 </body>
 </html>
