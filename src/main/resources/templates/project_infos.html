@@ -5,16 +5,15 @@
 <title th:text="${project}"></title>
 </head>
 <body>
-	<div>Hello <span th:text="|${name} (${email})|"></span></div>
 
 	<h1>Form</h1>
-	<form action="#" th:action="@{/greeting}" th:object="${greeting}"
+	<form action="#" th:action="@{/project/ingest}" th:object="${prompt}"
 		method="post">
 		<p>
-			Id: <input type="text" th:field="*{id}" />
+			Project: <input type="text" th:field="*{project}" />
 		</p>
 		<p>
-			Message: <input type="text" th:field="*{content}" />
+			Message: <input type="text" th:field="*{prompt}" />
 		</p>
 		<p>
 			<input type="submit" value="Submit" /> <input type="reset"
