@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${project}"></title>
+</head>
+<body>
+<div><textarea class="form-control" id="description" rows="5"
+                              name="description"
+                              placeholder="Description" th:text="${tree}"
+                              required="required"></textarea></div>
+</body>
+</html>
