@@ -2,7 +2,9 @@ package com.menkaix.hypermanager.services;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,55 +16,86 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.menkaix.hypermanager.models.Project;
+
+
 import reactor.core.publisher.Mono;
 
 @Service
 public class ProjectService {
-	
-	static Logger logger = LoggerFactory.getLogger(ProjectService.class) ;
-	
+
+	static Logger logger = LoggerFactory.getLogger(ProjectService.class);
+
 	@Autowired
-	private Environment env ;
-	
+	private Environment env;
+
 	@Autowired
-	private GoogleCloudAuthService auth ;
-	
+	private GoogleCloudAuthService auth;
+
+	private WebClient client() throws IOException {
+
+		String url = env.getProperty("microservices.backlog.url");
+
+		logger.info(url);
+
+		String token = auth.getIdentityToken(url);
+
+		WebClient client = WebClient.builder().baseUrl(url).defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.build();
+
+		return client;
+	}
 
 	public String getTree(String project) {
-		
-		String url = env.getProperty("microservices.backlog.url") ;
-		
-		logger.info(url);
+
+		try {
+
+			String ans = client().get().uri("project-command/{project}/tree", project).retrieve()
+					.bodyToMono(String.class).block();
+
+			return ans;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "error getting tree";
+	}
+	
+	
+
+	public List<Project> listProject() {
+
+		String ans;
 		
 		try {
-			String token = auth.getIdentityToken(url) ;
+			ans = client().get().uri("project-command/all").retrieve()
+					.bodyToMono(String.class).block();
 			
-			WebClient client = WebClient.builder()
-					  .baseUrl(url)
-					  .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer "+token) 					  
-					  .build();
+			Gson gson =  new GsonBuilder().setPrettyPrinting().create() ;
 			
-			String ans = client.get()
-			.uri("project-command/{project}/tree", project)
-			.retrieve()
-			.bodyToMono(String.class)
-			.block();
+			Project[] projects = gson.fromJson(ans, Project[].class) ;
 			
-			return ans ;
+			ArrayList<Project> listAns = new ArrayList<Project>() ;
+			
+			for (Project project : projects) {
+				listAns.add(project);
+			}
+			
+			return listAns;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		
 		
 		
-		
-		
-		
-		
-		
-		return "error getting tree";
+		return null;
 	}
 
 }

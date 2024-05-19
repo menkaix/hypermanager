@@ -23,6 +23,7 @@ public class ProjectController {
        
 		String tree = projectService.getTree(project);
 		
+		
         model.addAttribute("tree", tree);
         model.addAttribute("project", project);
         

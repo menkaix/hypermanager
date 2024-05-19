@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${project}"></title>
+<meta charset="UTF-8">
+<title th:text="${project}"></title>
 </head>
 <body>
-<div><textarea class="form-control" id="description" rows="5"
-                              name="description"
-                              placeholder="Description" th:text="${tree}"
-                              required="required"></textarea></div>
+	<div>Hello <span th:text="|${name} (${email})|"></span></div>
+
+	<h1>Form</h1>
+	<form action="#" th:action="@{/greeting}" th:object="${greeting}"
+		method="post">
+		<p>
+			Id: <input type="text" th:field="*{id}" />
+		</p>
+		<p>
+			Message: <input type="text" th:field="*{content}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
+
+
+	<div>
+		<textarea class="form-control" id="description" rows="5"
+			name="description" placeholder="Description" th:text="${tree}"
+			required="required"></textarea>
+	</div>
 </body>
 </html>
