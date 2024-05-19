@@ -39,3 +39,4 @@ out/
 gradlew
 *.bat
 .env
+ cloud-run-invoker.json
