@@ -92,10 +92,23 @@ public class ProjectService {
 			e.printStackTrace();
 		}
 
-		
-		
-		
 		return null;
+	}
+	
+	public void ingest(String project, String prompt) {
+		
+		try {
+			client().post().uri("ingest-story/{project}",project)
+			.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON)
+			.contentType(MediaType.APPLICATION_JSON)
+			.bodyValue("{\"data\":\""+prompt+"\"}").retrieve().bodyToMono(String.class).block();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 }

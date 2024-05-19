@@ -43,7 +43,7 @@ public class ProjectController {
 		
 		//model.addAttribute("prompt",prompt);
 		
-		
+		projectService.ingest(prompt.project, prompt.prompt) ;
 		
 		
 		return "redirect:/project/infos/"+prompt.project ;
