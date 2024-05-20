@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.menkaix.hypermanager.models.ActorDTO;
+import com.menkaix.hypermanager.models.FeatureTypeDTO;
 import com.menkaix.hypermanager.models.FullProjectDTO;
 import com.menkaix.hypermanager.models.Project;
 
@@ -132,6 +133,30 @@ public class ProjectService {
 			return null;
 		}
 
+	}
+
+	public List<FeatureTypeDTO> getFeaturetypes() {
+		
+		try {
+
+			String ans = client().get().uri("/featuretypes").retrieve().bodyToMono(String.class).block();
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			FeatureTypeDTO[] types = gson.fromJson(ans, FeatureTypeDTO[].class);
+
+			ArrayList<FeatureTypeDTO> listAns = new ArrayList<FeatureTypeDTO>();
+
+			for (FeatureTypeDTO type : types) {
+				listAns.add(type);
+			}
+
+			return listAns;
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+		
 	}
 
 }

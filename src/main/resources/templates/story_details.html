@@ -7,11 +7,8 @@
 <body>
 	<a th:href="@{/project/infos/} + ${story.projectCode}"
 		th:text="${story.projectCode}"></a>
-	<!-- <div th:text="${story_out.projectCode}"></div>  -->
-	<div th:text="${story.actorName}"></div>
-	<div th:text="${story.action}"></div>
-	<div th:text="${story.objective}"></div>
-	<div th:text="${story.scenario}"></div>
+
+<h1>Story details</h1>
 
 	<form action="#" th:action="@{/story/update}" th:object="${story}"
 		method="post">
@@ -39,6 +36,41 @@
 		</p>
 
 	</form>
+
+<h1>Add Features</h1>
+
+	<form action="#" th:action="@{/story/add_feature}" th:object="${newFeature}"
+		method="post">
+		<p>
+			<input type="hidden" th:field="*{storyId}" />
+		</p>
+		
+		<select th:field="*{type}" >
+			<option th:each="selectType : ${types}" th:value="${selectType.name}" th:text="${selectType.name}"></option>			
+		</select>
+		
+		<p>
+			<input type="text" th:field="*{name}" />
+		</p>
+		
+		<p>
+			<textarea th:field="*{description}"></textarea>
+		</p>
+		
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+		
+	</form>
+
+<h1>Features</h1>
+
+	<ul th:each="feature : ${story.features}">
+	
+	<li th:text="|[${feature.type}] ${feature.name}|"></li>
+	
+	</ul>
 
 
 </body>

@@ -9,7 +9,17 @@ public class FullStoryDTO {
 
     public String projectCode ;
 
-    public String getId() {
+    public String action ;
+
+	public String actorName;
+
+	public String objective ;
+
+	public String scenario ;
+
+	public List<FullFeatureDTO> features = new ArrayList<>() ;
+
+	public String getId() {
 		return id;
 	}
 
@@ -64,15 +74,5 @@ public class FullStoryDTO {
 	public void setFeatures(List<FullFeatureDTO> features) {
 		this.features = features;
 	}
-
-	public String actorName;
-
-    public String action ;
-
-    public String objective ;
-
-    public String scenario ;
-
-    public List<FullFeatureDTO> features = new ArrayList<>() ;
 
 }
