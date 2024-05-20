@@ -48,7 +48,8 @@ public class StoryController {
 	
 	@PostMapping("/update")
 	public String postMethodName(@ModelAttribute FullStoryDTO storyDTO, Model model) {
-		//TODO: process POST request
+		
+		storyService.update(storyDTO) ;
 		
 		return "redirect:/story/details/"+storyDTO.id;
 	}
