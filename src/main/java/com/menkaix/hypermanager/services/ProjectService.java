@@ -18,9 +18,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.menkaix.hypermanager.models.ActorDTO;
 import com.menkaix.hypermanager.models.FullProjectDTO;
 import com.menkaix.hypermanager.models.Project;
-
 
 import reactor.core.publisher.Mono;
 
@@ -56,10 +56,10 @@ public class ProjectService {
 			String ans = client().get().uri("project-command/{project}/tree", project).retrieve()
 					.bodyToMono(String.class).block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
-			
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
 			FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
-			
+
 			return objAns;
 
 		} catch (IOException e) {
@@ -69,29 +69,26 @@ public class ProjectService {
 
 		return null;
 	}
-	
-	
 
 	public List<Project> listProject() {
 
 		String ans;
-		
+
 		try {
-			ans = client().get().uri("project-command/all").retrieve()
-					.bodyToMono(String.class).block();
-			
-			Gson gson =  new GsonBuilder().setPrettyPrinting().create() ;
-			
-			Project[] projects = gson.fromJson(ans, Project[].class) ;
-			
-			ArrayList<Project> listAns = new ArrayList<Project>() ;
-			
+			ans = client().get().uri("project-command/all").retrieve().bodyToMono(String.class).block();
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			Project[] projects = gson.fromJson(ans, Project[].class);
+
+			ArrayList<Project> listAns = new ArrayList<Project>();
+
 			for (Project project : projects) {
 				listAns.add(project);
 			}
-			
+
 			return listAns;
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,21 +96,42 @@ public class ProjectService {
 
 		return null;
 	}
-	
+
 	public void ingest(String project, String prompt) {
-		
+
 		try {
-			client().post().uri("ingest-story/{project}",project)
-			.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON)
-			.contentType(MediaType.APPLICATION_JSON)
-			.bodyValue("{\"data\":\""+prompt+"\"}").retrieve().bodyToMono(String.class).block();
+			client().post().uri("ingest-story/{project}", project)
+					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+					.bodyValue("{\"data\":\"" + prompt + "\"}").retrieve().bodyToMono(String.class).block();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+
+	}
+
+	public List<ActorDTO> getActors(String projectCode) {
+
+		try {
+
+			String ans = client().get().uri("project-command/{projectCode}/list-actors", projectCode).retrieve().bodyToMono(String.class).block();
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			ActorDTO[] actors = gson.fromJson(ans, ActorDTO[].class);
+
+			ArrayList<ActorDTO> listAns = new ArrayList<ActorDTO>();
+
+			for (ActorDTO project : actors) {
+				listAns.add(project);
+			}
+
+			return listAns;
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+
 	}
 
 }

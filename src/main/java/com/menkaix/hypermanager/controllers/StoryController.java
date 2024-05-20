@@ -15,6 +15,7 @@ import com.menkaix.hypermanager.models.ActorDTO;
 import com.menkaix.hypermanager.models.FullStoryDTO;
 import com.menkaix.hypermanager.models.Prompt;
 import com.menkaix.hypermanager.models.StoryDTO;
+import com.menkaix.hypermanager.services.ProjectService;
 import com.menkaix.hypermanager.services.StoryService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class StoryController {
 	
 	@Autowired
+	private ProjectService projectService ;
+	
+	@Autowired
 	private StoryService storyService ;
 	
 	@GetMapping("/details/{storyID}")
@@ -33,19 +37,8 @@ public class StoryController {
 		
 		FullStoryDTO storyDTO = storyService.getTree(storyID) ;
 		
-		List<ActorDTO> actors = new ArrayList<ActorDTO>() ;
+		List<ActorDTO> actors = projectService.getActors(storyDTO.projectCode) ;
 		
-		ActorDTO dto1 = new ActorDTO() ;
-		ActorDTO dto2 = new ActorDTO() ;
-		ActorDTO dto3 = new ActorDTO() ;
-		
-		dto1.id = "1" ; dto1.name = "alice" ;
-		dto2.id = "2" ; dto2.name = "bob" ;
-		dto3.id = "3" ; dto3.name = "dispatcher" ;
-		
-		actors.add(dto1);
-		actors.add(dto2);
-		actors.add(dto3);
 		
 		model.addAttribute("story", storyDTO);
 		model.addAttribute("actors", actors);
