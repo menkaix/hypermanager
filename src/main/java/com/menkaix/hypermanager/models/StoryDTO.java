@@ -1,15 +1,20 @@
 package com.menkaix.hypermanager.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FullStoryDTO {
+public class StoryDTO {
 
     public String id;
 
     public String projectCode ;
 
-    public String getId() {
+    public String actorName;
+
+    public String action ;
+
+    public String objective ;
+
+    public String scenario ;
+
+	public String getId() {
 		return id;
 	}
 
@@ -57,22 +62,6 @@ public class FullStoryDTO {
 		this.scenario = scenario;
 	}
 
-	public List<FullFeatureDTO> getFeatures() {
-		return features;
-	}
-
-	public void setFeatures(List<FullFeatureDTO> features) {
-		this.features = features;
-	}
-
-	public String actorName;
-
-    public String action ;
-
-    public String objective ;
-
-    public String scenario ;
-
-    public List<FullFeatureDTO> features = new ArrayList<>() ;
-
+    
+    
 }
