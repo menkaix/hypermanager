@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Hyper Manager</title>
+</head>
+<body>
+	<a th:href="@{/project/infos/} + ${story.projectCode}"
+		th:text="${story.projectCode}"></a>
+	<!-- <div th:text="${story_out.projectCode}"></div>  -->
+	<div th:text="${story.actorName}"></div>
+	<div th:text="${story.action}"></div>
+	<div th:text="${story.objective}"></div>
+	<div th:text="${story.scenario}"></div>
+
+	<form action="#" th:action="@{/story/update}" th:object="${story}"
+		method="post">
+		<p>
+			<input type="hidden" th:field="*{projectCode}" />
+		</p>
+		<p>
+			<input type="hidden" th:field="*{id}" />
+		</p>
+		<select th:field="*{actorName}" >
+			<option th:each="actor : ${actors}" th:value="${actor.name}" th:text="${actor.name}" th:selected="${actor.name}==${story.actorName}"></option>			
+		</select>
+		<p>
+			<input type="text" th:field="*{action}" />
+		</p>
+		<p>
+			<input type="text" th:field="*{objective}" />
+		</p>
+		<p>
+			<textarea th:field="*{scenario}"></textarea>
+		</p>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+
+	</form>
+
+
+</body>
+</html>
