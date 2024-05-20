@@ -29,7 +29,11 @@
 			<div th:each="actor : ${tree.actors}">
 				<h2 th:text="${actor.name}"></h2>
 				<ul th:each="story : ${actor.stories}">
-					<li th:text="|${story.action} : ${story.scenario}|"></li>
+					<li >
+					<a th:href="@{/story/details/} + ${story.id}" th:text="|${story.action}|"></a>
+					<div th:text="|${story.scenario}|"></div>
+					</li>
+					
 				</ul>
 			</div>
 		</div>
