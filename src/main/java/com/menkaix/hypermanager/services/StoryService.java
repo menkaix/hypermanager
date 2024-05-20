@@ -13,12 +13,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.menkaix.hypermanager.models.FeatureDTO;
 import com.menkaix.hypermanager.models.FullProjectDTO;
 import com.menkaix.hypermanager.models.FullStoryDTO;
 
 @Service
 public class StoryService {
-	
+
 	static Logger logger = LoggerFactory.getLogger(StoryService.class);
 
 	@Autowired
@@ -26,7 +27,7 @@ public class StoryService {
 
 	@Autowired
 	private GoogleCloudAuthService auth;
-	
+
 	private WebClient client() throws IOException {
 
 		String url = env.getProperty("microservices.backlog.url");
@@ -41,18 +42,16 @@ public class StoryService {
 		return client;
 	}
 
-	
-
 	public FullStoryDTO getTree(String storyID) {
 		try {
 
-			String ans = client().get().uri("story-command/{storyID}/tree", storyID).retrieve()
-					.bodyToMono(String.class).block();
+			String ans = client().get().uri("story-command/{storyID}/tree", storyID).retrieve().bodyToMono(String.class)
+					.block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
-			
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
 			FullStoryDTO objAns = gson.fromJson(ans, FullStoryDTO.class);
-			
+
 			return objAns;
 
 		} catch (IOException e) {
@@ -63,22 +62,34 @@ public class StoryService {
 		return null;
 	}
 
-
-
 	public void update(FullStoryDTO storyDTO) {
-		
+
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		
+
 		try {
 			String ans = client().post().uri("story-command/update")
 					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(gson.toJson(storyDTO))
-					.retrieve().bodyToMono(String.class).block();
+					.bodyValue(gson.toJson(storyDTO)).retrieve().bodyToMono(String.class).block();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public void addFeature(FeatureDTO featureDTO) {
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+		try {
+			String ans = client().post().uri("/feature-command/{storyId}/add", featureDTO.storyId)
+					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+					.bodyValue(gson.toJson(featureDTO)).retrieve().bodyToMono(String.class).block();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

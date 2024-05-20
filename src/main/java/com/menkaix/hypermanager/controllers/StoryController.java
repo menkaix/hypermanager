@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.menkaix.hypermanager.models.ActorDTO;
+import com.menkaix.hypermanager.models.FeatureDTO;
+import com.menkaix.hypermanager.models.FeatureTypeDTO;
 import com.menkaix.hypermanager.models.FullStoryDTO;
 import com.menkaix.hypermanager.models.Prompt;
 import com.menkaix.hypermanager.models.StoryDTO;
@@ -39,9 +41,15 @@ public class StoryController {
 		
 		List<ActorDTO> actors = projectService.getActors(storyDTO.projectCode) ;
 		
+		List<FeatureTypeDTO> types = projectService.getFeaturetypes() ;
+		
+		FeatureDTO newFeature = new FeatureDTO() ;
+		newFeature.storyId = storyID ;
 		
 		model.addAttribute("story", storyDTO);
 		model.addAttribute("actors", actors);
+		model.addAttribute("newFeature", newFeature);
+		model.addAttribute("types", types);
 		
 		return "story_details";
 	}
@@ -52,6 +60,14 @@ public class StoryController {
 		storyService.update(storyDTO) ;
 		
 		return "redirect:/story/details/"+storyDTO.id;
+	}
+	
+	@PostMapping("/add_feature")
+	public String postMethodName(@ModelAttribute FeatureDTO newFeature, Model model) {
+		
+		storyService.addFeature(newFeature) ;
+		
+		return "redirect:/story/details/"+newFeature.storyId;
 	}
 	
 	
