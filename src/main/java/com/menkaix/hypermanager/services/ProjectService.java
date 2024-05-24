@@ -20,7 +20,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.menkaix.hypermanager.models.ActorDTO;
 import com.menkaix.hypermanager.models.FeatureTypeDTO;
+import com.menkaix.hypermanager.models.FullActorDTO;
+import com.menkaix.hypermanager.models.FullFeatureDTO;
 import com.menkaix.hypermanager.models.FullProjectDTO;
+import com.menkaix.hypermanager.models.FullStoryDTO;
+import com.menkaix.hypermanager.models.FullTaskDTO;
 import com.menkaix.hypermanager.models.Project;
 
 import reactor.core.publisher.Mono;
@@ -50,6 +54,40 @@ public class ProjectService {
 		return client;
 	}
 
+	private FullProjectDTO distributeSpan(FullProjectDTO objAns) {
+		
+		for (FullActorDTO actor : objAns.actors) {
+			
+			actor.span = 0 ;
+			
+			for (FullStoryDTO story : actor.stories) {
+				
+				story.span= 0 ;
+				
+				for (FullFeatureDTO feature : story.features) {
+					feature.span = 0 ;
+					
+					if(feature.tasks.size()==0) {
+						FullTaskDTO placeHolder = new FullTaskDTO() ;
+						placeHolder.title = "(empty)" ;
+						feature.tasks.add(placeHolder);
+					}
+					
+					for (FullTaskDTO task : feature.tasks) {
+						actor.span ++ ;
+						story.span ++ ;
+						feature.span ++ ;
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		return objAns;
+	}
+
 	public FullProjectDTO getTree(String project) {
 
 		try {
@@ -60,8 +98,10 @@ public class ProjectService {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 			FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
+			
+			
 
-			return objAns;
+			return distributeSpan(objAns);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

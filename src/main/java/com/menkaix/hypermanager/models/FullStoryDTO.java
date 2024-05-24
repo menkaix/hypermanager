@@ -17,6 +17,8 @@ public class FullStoryDTO {
 
 	public String scenario ;
 
+	public int span ;
+	
 	public List<FullFeatureDTO> features = new ArrayList<>() ;
 
 	public String getId() {

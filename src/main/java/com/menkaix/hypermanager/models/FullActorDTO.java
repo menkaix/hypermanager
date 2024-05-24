@@ -10,6 +10,8 @@ public class FullActorDTO {
     public String projectName ;
     public String description ;
     public String type ;
+    
+    public int span ;
 
     public List<FullStoryDTO> stories = new ArrayList<>() ;
 }

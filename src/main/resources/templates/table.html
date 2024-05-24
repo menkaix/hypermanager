@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="|All - ${project}|"></title>
+</head>
+<body>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th>Actors</th>
+				<th>Stories</th>
+				<th>Features</th>
+				<th>Tasks</th>
+			</tr>
+
+		</thead>
+		<tbody>
+			<tr th:each="actor : ${tree.actors}">
+				<td th:text="${actor.name}" th:roswpan="${actor.span}"></td>
+				<td>
+				
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+
+</body>
+</html>
