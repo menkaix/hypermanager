@@ -6,28 +6,17 @@
 </head>
 <body>
 
-
-	<table>
-		<thead>
-			<tr>
-				<th>Actors</th>
-				<th>Stories</th>
-				<th>Features</th>
-				<th>Tasks</th>
-			</tr>
-
-		</thead>
-		<tbody>
-			<tr th:each="actor : ${tree.actors}">
-				<td th:text="${actor.name}" th:roswpan="${actor.span}"></td>
-				<td>
-				
-				</td>
-			</tr>
-		</tbody>
-
-	</table>
-
-
+	<div th:each="actor : ${tree.actors}">
+		<div th:text="${actor.name}" th:roswpan="${actor.span}"></div>
+		<div th:each="story : ${actor.stories}">
+			<div th:text="${story.action}"></div>
+			<div th:each="feature : ${story.features}">
+				<div th:text="|[${feature.type}] - ${feature.name}|"></div>
+				<div th:each="task : ${feature.tasks}">
+				<div th:text="${task.title}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
