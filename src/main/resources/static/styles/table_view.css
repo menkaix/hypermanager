@@ -1,0 +1,23 @@
+.actorstyle{
+	color: white;
+	background-color: blue;
+}
+
+.actionstyle{
+	background-color: lightblue;
+	margin-left: 20px;
+}
+
+.scenariostyle{
+	background-color: #d0eaee;
+	margin-left: 20px;
+}
+
+.featurestyle{
+	background-color: lightgrey;
+	margin-left: 40px;
+}
+
+.tasktyle{
+	margin-left: 60px;
+}

@@ -3,17 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <title th:text="|All - ${project}|"></title>
+
+<link th:href="@{/styles/table_view.css}" rel="stylesheet" />
+
 </head>
 <body>
 
 	<div th:each="actor : ${tree.actors}">
-		<div th:text="${actor.name}" th:roswpan="${actor.span}"></div>
+		<div th:text="${actor.name}" th:roswpan="${actor.span}" class="actorstyle"></div>
 		<div th:each="story : ${actor.stories}">
-			<div th:text="${story.action}"></div>
+			<div th:text="${story.action}" class="actionstyle"></div>
+			<div th:text="${story.scenario}" class="scenariostyle"></div>
 			<div th:each="feature : ${story.features}">
-				<div th:text="|[${feature.type}] - ${feature.name}|"></div>
+				<div th:text="|[${feature.type}] - ${feature.name}|" class="featurestyle"></div>
 				<div th:each="task : ${feature.tasks}">
-				<div th:text="${task.title}"></div>
+					<div th:text="${task.title}" class="tasktyle"></div>
 				</div>
 			</div>
 		</div>

@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title th:text="${project}"></title>
+
+<link th:href="@{/styles/table_view.css}" rel="stylesheet" />
+
 </head>
 <body>
 
@@ -13,7 +16,8 @@
 			Project: <input type="text" th:field="*{project}" />
 		</p>
 		<p>
-			Message: <textarea th:field="*{prompt}" ></textarea>
+			Message:
+			<textarea th:field="*{prompt}"></textarea>
 		</p>
 		<p>
 			<input type="submit" value="Submit" /> <input type="reset"
@@ -29,12 +33,28 @@
 			<div th:each="actor : ${tree.actors}">
 				<h2 th:text="${actor.name}"></h2>
 				<ul th:each="story : ${actor.stories}">
-					<li >
-					<a th:href="@{/story/details/} + ${story.id}" th:text="|${story.action}|"></a>
-					<div th:text="|${story.scenario}|"></div>
-					</li>
-					
+					<li><a th:href="@{/story/details/} + ${story.id}"
+						th:text="|${story.action}|"></a>
+						<div th:text="|${story.scenario}|"></div></li>
+
 				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:each="actor : ${tree.actors}">
+		<div th:text="${actor.name}" th:roswpan="${actor.span}"
+			class="actorstyle"></div>
+		<div th:each="story : ${actor.stories}">
+			<div th:text="${story.action}" class="actionstyle"></div>
+			<div th:text="${story.scenario}" class="scenariostyle"></div>
+			<div th:each="feature : ${story.features}">
+				<div th:text="|[${feature.type}] - ${feature.name}|"
+					class="featurestyle"></div>
+				<div th:each="task : ${feature.tasks}">
+					<div th:text="${task.title}" class="tasktyle"></div>
+				</div>
 			</div>
 		</div>
 	</div>
