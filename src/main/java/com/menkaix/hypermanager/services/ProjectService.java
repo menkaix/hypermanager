@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.menkaix.hypermanager.models.ActorDTO;
+import com.menkaix.hypermanager.models.FeatureTreeDTO;
 import com.menkaix.hypermanager.models.FeatureTypeDTO;
 import com.menkaix.hypermanager.models.FullActorDTO;
 import com.menkaix.hypermanager.models.FullFeatureDTO;
@@ -55,36 +56,36 @@ public class ProjectService {
 	}
 
 	private FullProjectDTO distributeSpan(FullProjectDTO objAns) {
-		
+
 		for (FullActorDTO actor : objAns.actors) {
-			
-			actor.span = 0 ;
-			
+
+			actor.span = 0;
+
 			for (FullStoryDTO story : actor.stories) {
-				
-				story.span= 0 ;
-				
+
+				story.span = 0;
+
 				for (FullFeatureDTO feature : story.features) {
-					feature.span = 0 ;
-					
-					if(feature.tasks.size()==0) {
-						FullTaskDTO placeHolder = new FullTaskDTO() ;
-						placeHolder.title = "(empty)" ;
+					feature.span = 0;
+
+					if (feature.tasks.size() == 0) {
+						FullTaskDTO placeHolder = new FullTaskDTO();
+						placeHolder.title = "(empty)";
 						feature.tasks.add(placeHolder);
 					}
-					
+
 					for (FullTaskDTO task : feature.tasks) {
-						actor.span ++ ;
-						story.span ++ ;
-						feature.span ++ ;
+						actor.span++;
+						story.span++;
+						feature.span++;
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		return objAns;
 	}
 
@@ -98,8 +99,6 @@ public class ProjectService {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 			FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
-			
-			
 
 			return distributeSpan(objAns);
 
@@ -155,7 +154,8 @@ public class ProjectService {
 
 		try {
 
-			String ans = client().get().uri("project-command/{projectCode}/list-actors", projectCode).retrieve().bodyToMono(String.class).block();
+			String ans = client().get().uri("project-command/{projectCode}/list-actors", projectCode).retrieve()
+					.bodyToMono(String.class).block();
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -176,7 +176,7 @@ public class ProjectService {
 	}
 
 	public List<FeatureTypeDTO> getFeaturetypes() {
-		
+
 		try {
 
 			String ans = client().get().uri("/featuretypes").retrieve().bodyToMono(String.class).block();
@@ -196,7 +196,28 @@ public class ProjectService {
 			logger.error(e.getMessage());
 			return null;
 		}
-		
+
+	}
+
+	public String featureTree(String project) {
+
+		String ans;
+
+		try {
+			ans = client().get().uri("project-command/{project}/feature-tree", project).retrieve()
+					.bodyToMono(String.class).block();
+			
+			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
+
+			List<FeatureTreeDTO> tree = gson.fromJson(ans, List.class) ;
+			
+			return gson.toJson(tree);
+
+		} catch (IOException e) {
+			logger.error("getting feature tree :" + e.getMessage());
+		}
+
+		return "error";
 	}
 
 }
