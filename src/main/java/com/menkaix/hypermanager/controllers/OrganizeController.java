@@ -20,7 +20,7 @@ public class OrganizeController {
 	public String home(@PathVariable("project") String project, Model model) {
 
 		
-		String jsonCode = projectService.featureTree(project);
+		String jsonCode = projectService.featureTreeString(project);
 		
 		
 		model.addAttribute("project", project);

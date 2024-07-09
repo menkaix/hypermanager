@@ -198,26 +198,36 @@ public class ProjectService {
 		}
 
 	}
+	
+	public String featureTreeString(String project) {
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
+		
+		List<FeatureTreeDTO> tree = featureTree(project) ;
+		
+		return gson.toJson(tree);
+		
+	}
 
-	public String featureTree(String project) {
+	public List<FeatureTreeDTO> featureTree(String project) {
 
-		String ans;
+		List<FeatureTreeDTO> ans;
 
 		try {
-			ans = client().get().uri("project-command/{project}/feature-tree", project).retrieve()
+			String apiAns = client().get().uri("project-command/{project}/feature-tree", project).retrieve()
 					.bodyToMono(String.class).block();
 			
 			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
 
-			List<FeatureTreeDTO> tree = gson.fromJson(ans, List.class) ;
+			List<FeatureTreeDTO> tree = gson.fromJson(apiAns, List.class) ;
 			
-			return gson.toJson(tree);
+			return tree ;
 
 		} catch (IOException e) {
 			logger.error("getting feature tree :" + e.getMessage());
 		}
 
-		return "error";
+		return null;
 	}
 
 }
