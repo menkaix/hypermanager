@@ -12,15 +12,15 @@
 <form action="#" th:action="@{/organize/parenting}" th:object="${parenting}"
 		method="post">
 		<p>
-			Project: <input type="text" th:field="*{project}" />
+			Project: <input type="text" th:field="*{projectName}" />
 		</p>
 		<p>
 			parent:
-			<input th:field="*{parentID}">
+			<input type="text"  th:field="*{parentID}">
 		</p>
 		<p>
 			child:
-			<input th:field="*{childID}">
+			<input type="text"  th:field="*{childID}">
 		</p>
 		<p>
 			<input type="submit" value="Submit" /> <input type="reset"

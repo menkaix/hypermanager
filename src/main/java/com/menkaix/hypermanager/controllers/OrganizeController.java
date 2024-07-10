@@ -28,7 +28,7 @@ public class OrganizeController {
 		
 		FeatureParentingDTO dto=  new FeatureParentingDTO() ;
 		
-		dto.project = project ;
+		dto.projectName = project ;
 		
 		model.addAttribute("parenting", dto) ;
 		model.addAttribute("project", project);
@@ -43,7 +43,7 @@ public class OrganizeController {
 		projectService.organizeFeatureHyerachy(parenting.parentID, parenting.childID) ;
 		
 		
-		return "redirect:/project/infos/"+parenting.project ;
+		return "redirect:/project/infos/"+parenting.projectName ;
 		
 	}
 
