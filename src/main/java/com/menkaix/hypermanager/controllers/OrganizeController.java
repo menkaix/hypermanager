@@ -43,7 +43,7 @@ public class OrganizeController {
 		projectService.organizeFeatureHyerachy(parenting.parentID, parenting.childID) ;
 		
 		
-		return "redirect:/project/infos/"+parenting.projectName ;
+		return "redirect:/organize/features/"+parenting.projectName ;
 		
 	}
 
