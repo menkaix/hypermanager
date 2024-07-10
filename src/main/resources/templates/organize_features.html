@@ -9,7 +9,24 @@
 
 </body>
 
-
+<form action="#" th:action="@{/organize/parenting}" th:object="${parenting}"
+		method="post">
+		<p>
+			Project: <input type="text" th:field="*{project}" />
+		</p>
+		<p>
+			parent:
+			<input th:field="*{parentID}">
+		</p>
+		<p>
+			child:
+			<input th:field="*{childID}">
+		</p>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
 
 <pre th:text="${jsonCode}">
   

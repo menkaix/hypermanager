@@ -229,5 +229,18 @@ public class ProjectService {
 
 		return null;
 	}
+	
+	
+	public void organizeFeatureHyerachy(String parentID, String childID) {
+		
+		try {
+			String apiAns = client().get().uri("/feature-command/{parent}/adopt/{child}", parentID, childID).retrieve()
+					.bodyToMono(String.class).block();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }
