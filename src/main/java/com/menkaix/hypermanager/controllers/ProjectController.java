@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.menkaix.hypermanager.models.FullProjectDTO;
+import com.menkaix.hypermanager.models.Project;
 import com.menkaix.hypermanager.models.Prompt;
 import com.menkaix.hypermanager.services.ProjectService;
 
@@ -44,5 +45,16 @@ public class ProjectController {
 		
 		
 		return "redirect:/project/infos/"+prompt.project ;
+	}
+	
+	@PostMapping("/new")
+	public String newProject(@ModelAttribute Project project, Model model) {
+		
+		//model.addAttribute("prompt",prompt);
+		
+		projectService.create(project) ;
+		
+		
+		return "redirect:/" ;
 	}
 }

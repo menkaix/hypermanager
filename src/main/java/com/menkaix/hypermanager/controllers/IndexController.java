@@ -31,6 +31,8 @@ public class IndexController {
         
         model.addAttribute("projects", projects);
         
+        model.addAttribute("project", new Project()) ;
+        
         model.addAttribute("name", name);
         model.addAttribute("email", email);
         

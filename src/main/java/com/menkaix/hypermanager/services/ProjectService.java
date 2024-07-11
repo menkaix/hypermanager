@@ -243,4 +243,21 @@ public class ProjectService {
 		
 	}
 
+	public void create(Project project) {
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		try {
+			String apiAns = client().post().uri("/projects")
+					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+					.bodyValue(gson.toJson(project))
+					.retrieve()
+					.bodyToMono(String.class).block();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 }
