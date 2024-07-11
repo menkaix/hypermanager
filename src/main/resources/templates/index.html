@@ -20,11 +20,14 @@
 	<form action="#" th:action="@{/project/new}" th:object="${project}"
 		method="post">
 		<p>
-			Project: <input type="text" th:field="*{project}" />
+			code: <input type="text" th:field="*{code}" />
 		</p>
 		<p>
-			Message:
-			<textarea th:field="*{prompt}"></textarea>
+			Name: <input type="text" th:field="*{name}" />
+		</p>
+		<p>
+			description:
+			<textarea th:field="*{description}"></textarea>
 		</p>
 		<p>
 			<input type="submit" value="Submit" /> <input type="reset"

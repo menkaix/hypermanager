@@ -13,14 +13,11 @@
 	<form action="#" th:action="@{/project/ingest}" th:object="${prompt}"
 		method="post">
 		<p>
-			code: <input type="text" th:field="*{code}" />
-		</p>
-		<p>
-			name: <input type="text" th:field="*{name}" />
+			Project: <input type="text" th:field="*{project}" />
 		</p>
 		<p>
 			Message:
-			<textarea th:field="*{description}"></textarea>
+			<textarea th:field="*{prompt}"></textarea>
 		</p>
 		<p>
 			<input type="submit" value="Submit" /> <input type="reset"
