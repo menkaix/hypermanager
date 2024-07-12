@@ -44,13 +44,13 @@
 
 
 	<div th:each="actor : ${tree.actors}">
-		<div th:text="${actor.name}" th:roswpan="${actor.span}"
+		<div th:text="|${actor.name} (${actor.id})|" th:roswpan="${actor.span}"
 			class="actorstyle"></div>
 		<div th:each="story : ${actor.stories}">
 			<div th:text="${story.action}" class="actionstyle"></div>
 			<div th:text="${story.scenario}" class="scenariostyle"></div>
 			<div th:each="feature : ${story.features}">
-				<div th:text="|[${feature.type}] - ${feature.name}|"
+				<div th:text="|[${feature.type}] - ${feature.name} (${feature.id})|"
 					class="featurestyle"></div>
 				<div th:each="task : ${feature.tasks}">
 					<div th:text="${task.title}" class="tasktyle"></div>
