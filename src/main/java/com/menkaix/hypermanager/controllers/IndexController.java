@@ -23,8 +23,16 @@ public class IndexController {
 	@GetMapping
     public String home(Model model,
                        @AuthenticationPrincipal OAuth2User user) {
-        String name = user.getAttribute("name");
-        String email = user.getAttribute("email");
+        
+        String name = "";
+        String email = "";
+        if(user != null) {
+            name = user.getAttribute("name");
+            email = user.getAttribute("email");
+        }
+        
+        //System.out.println(user)
+        
         
         
         List<Project> projects = projectService.listProject() ;

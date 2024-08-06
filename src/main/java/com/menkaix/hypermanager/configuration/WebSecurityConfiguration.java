@@ -13,6 +13,7 @@ public class WebSecurityConfiguration {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        /* 
         return http
                 .authorizeHttpRequests()
                 .anyRequest().authenticated()
@@ -20,6 +21,14 @@ public class WebSecurityConfiguration {
                 .oauth2Login()
                 .and()
                 .build();
+        */
+
+        return http
+        .authorizeHttpRequests(authorize -> authorize
+            .anyRequest().permitAll() // Permit all requests
+        )
+        .build();
+        
     }
     
     @Bean
