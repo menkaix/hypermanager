@@ -1,5 +1,7 @@
 package com.menkaix.hypermanager.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,7 @@ public class ProjectController {
 	private ProjectService projectService ;
 	
 	@GetMapping("/infos/{project}")
-    public String home(@PathVariable("project") String project, Model model) {
+    public String toViewProjectInfos(@PathVariable("project") String project, Model model) {
        
 		FullProjectDTO tree = projectService.getTree(project);
 		
@@ -35,9 +37,19 @@ public class ProjectController {
         
         return "project_infos";
     }
+
+	@GetMapping("/all")
+    public String toViewProjectInfos(Model model) {
+       
+		List<Project> projects = projectService.listProject() ;
+		
+		model.addAttribute("projects", projects);
+        
+        return "index-projects";
+    }
 	
 	@PostMapping("/ingest")
-	public String ingest(@ModelAttribute Prompt prompt, Model model) {
+	public String actionIngestInProject(@ModelAttribute Prompt prompt, Model model) {
 		
 		//model.addAttribute("prompt",prompt);
 		
@@ -48,7 +60,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/new")
-	public String newProject(@ModelAttribute Project project, Model model) {
+	public String actionCreateProject(@ModelAttribute Project project, Model model) {
 		
 		//model.addAttribute("prompt",prompt);
 		

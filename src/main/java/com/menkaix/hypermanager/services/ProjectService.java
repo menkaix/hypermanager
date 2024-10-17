@@ -44,12 +44,14 @@ public class ProjectService {
 	private WebClient client() throws IOException {
 
 		String url = env.getProperty("microservices.backlog.url");
+		String apikey =  env.getProperty("microservices.apikey");
 
 		logger.info(url);
+		
+		//no need for token since apikey
+		//String token = auth.getIdentityToken(url);
 
-		String token = auth.getIdentityToken(url);
-
-		WebClient client = WebClient.builder().baseUrl(url).defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+		WebClient client = WebClient.builder().baseUrl(url).defaultHeader("x-api-key", apikey)
 				.build();
 
 		return client;
