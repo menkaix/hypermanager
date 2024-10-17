@@ -41,3 +41,4 @@ gradlew
 .env
  cloud-run-invoker.json
 /.idx
+key.json

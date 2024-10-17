@@ -4,14 +4,14 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
-@Configuration
+//@Configuration
 public class WebSecurityConfiguration {
-
-    @Bean
+/*
+    //@Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /* 
         return http
@@ -21,7 +21,7 @@ public class WebSecurityConfiguration {
                 .oauth2Login()
                 .and()
                 .build();
-        */
+        
 
         return http
         .authorizeHttpRequests(authorize -> authorize
@@ -31,7 +31,7 @@ public class WebSecurityConfiguration {
         
     }
     
-    @Bean
+    //@Bean
     FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilter() {
 
         final FilterRegistrationBean<ForwardedHeaderFilter> filterRegistrationBean = new FilterRegistrationBean<ForwardedHeaderFilter>();
@@ -41,4 +41,5 @@ public class WebSecurityConfiguration {
 
         return filterRegistrationBean;
     }
+    */
 }
