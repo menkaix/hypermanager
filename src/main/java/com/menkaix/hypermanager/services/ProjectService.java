@@ -14,10 +14,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.reactive.function.client.WebClient;
+//import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.menkaix.hypermanager.models.ActorDTO;
 import com.menkaix.hypermanager.models.FeatureTreeDTO;
 import com.menkaix.hypermanager.models.FeatureTypeDTO;
@@ -28,7 +31,7 @@ import com.menkaix.hypermanager.models.FullStoryDTO;
 import com.menkaix.hypermanager.models.FullTaskDTO;
 import com.menkaix.hypermanager.models.Project;
 
-import reactor.core.publisher.Mono;
+//import reactor.core.publisher.Mono;
 
 @Service
 public class ProjectService {
@@ -41,21 +44,22 @@ public class ProjectService {
 	@Autowired
 	private GoogleCloudAuthService auth;
 
-	private WebClient client() throws IOException {
+	// private WebClient client() throws IOException {
 
-		String url = env.getProperty("microservices.backlog.url");
-		String apikey =  env.getProperty("microservices.apikey");
+	// String url = env.getProperty("microservices.backlog.url");
+	// String apikey = env.getProperty("microservices.apikey");
 
-		logger.info(url);
-		
-		//no need for token since apikey
-		//String token = auth.getIdentityToken(url);
+	// logger.info(url);
 
-		WebClient client = WebClient.builder().baseUrl(url).defaultHeader("x-api-key", apikey)
-				.build();
+	// //no need for token since apikey
+	// //String token = auth.getIdentityToken(url);
 
-		return client;
-	}
+	// WebClient client =
+	// WebClient.builder().baseUrl(url).defaultHeader("x-api-key", apikey)
+	// .build();
+
+	// return client;
+	// }
 
 	private FullProjectDTO distributeSpan(FullProjectDTO objAns) {
 
@@ -93,21 +97,22 @@ public class ProjectService {
 
 	public FullProjectDTO getTree(String project) {
 
-		try {
+		// try {
 
-			String ans = client().get().uri("project-command/{project}/tree", project).retrieve()
-					.bodyToMono(String.class).block();
+		// String ans = client().get().uri("project-command/{project}/tree",
+		// project).retrieve()
+		// .bodyToMono(String.class).block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
+		// FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
 
-			return distributeSpan(objAns);
+		// return distributeSpan(objAns);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		return null;
 	}
@@ -116,24 +121,56 @@ public class ProjectService {
 
 		String ans;
 
+		// try {
+		// ans = client()
+		// .get()
+		// .uri("project-command/all")
+		// .retrieve()
+		// .bodyToMono(String.class)
+		// .block();
+
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+		// Project[] projects = gson.fromJson(ans, Project[].class);
+
+		// ArrayList<Project> listAns = new ArrayList<Project>();
+
+		// for (Project project : projects) {
+		// listAns.add(project);
+		// }
+
+		// return listAns;
+
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
+		Unirest.setTimeouts(0, 0);
 		try {
-			ans = client().get().uri("project-command/all").retrieve().bodyToMono(String.class).block();
+
+			String stringUrl = env.getProperty("microservices.backlog.url")+"/project-command/all";
+
+			HttpResponse<String> response = Unirest.get(stringUrl)
+					.header("x-api-key", env.getProperty("microservices.apikey"))
+					.asString();
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			Project[] projects = gson.fromJson(ans, Project[].class);
+			Project[] projects = gson.fromJson(response.getBody(), Project[].class);
 
 			ArrayList<Project> listAns = new ArrayList<Project>();
-
+			
 			for (Project project : projects) {
 				listAns.add(project);
 			}
 
 			return listAns;
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (UnirestException e) {
+			
+			logger.error(e.getMessage());
+
 		}
 
 		return null;
@@ -141,125 +178,135 @@ public class ProjectService {
 
 	public void ingest(String project, String prompt) {
 
-		try {
-			client().post().uri("ingest-story/{project}", project)
-					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-					.bodyValue("{\"data\":\"" + prompt + "\"}").retrieve().bodyToMono(String.class).block();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// client().post().uri("ingest-story/{project}", project)
+		// .accept(MediaType.TEXT_PLAIN,
+		// MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+		// .bodyValue("{\"data\":\"" + prompt +
+		// "\"}").retrieve().bodyToMono(String.class).block();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 	}
 
 	public List<ActorDTO> getActors(String projectCode) {
 
-		try {
+		// try {
 
-			String ans = client().get().uri("project-command/{projectCode}/list-actors", projectCode).retrieve()
-					.bodyToMono(String.class).block();
+		// String ans = client().get().uri("project-command/{projectCode}/list-actors",
+		// projectCode).retrieve()
+		// .bodyToMono(String.class).block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			ActorDTO[] actors = gson.fromJson(ans, ActorDTO[].class);
+		// ActorDTO[] actors = gson.fromJson(ans, ActorDTO[].class);
 
-			ArrayList<ActorDTO> listAns = new ArrayList<ActorDTO>();
+		// ArrayList<ActorDTO> listAns = new ArrayList<ActorDTO>();
 
-			for (ActorDTO project : actors) {
-				listAns.add(project);
-			}
+		// for (ActorDTO project : actors) {
+		// listAns.add(project);
+		// }
 
-			return listAns;
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			return null;
-		}
+		// return listAns;
+		// } catch (IOException e) {
+		// logger.error(e.getMessage());
+		// return null;
+		// }
+
+		return null;
 
 	}
 
 	public List<FeatureTypeDTO> getFeaturetypes() {
 
-		try {
+		// try {
 
-			String ans = client().get().uri("/featuretypes").retrieve().bodyToMono(String.class).block();
+		// String ans =
+		// client().get().uri("/featuretypes").retrieve().bodyToMono(String.class).block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			FeatureTypeDTO[] types = gson.fromJson(ans, FeatureTypeDTO[].class);
+		// FeatureTypeDTO[] types = gson.fromJson(ans, FeatureTypeDTO[].class);
 
-			ArrayList<FeatureTypeDTO> listAns = new ArrayList<FeatureTypeDTO>();
+		// ArrayList<FeatureTypeDTO> listAns = new ArrayList<FeatureTypeDTO>();
 
-			for (FeatureTypeDTO type : types) {
-				listAns.add(type);
-			}
+		// for (FeatureTypeDTO type : types) {
+		// listAns.add(type);
+		// }
 
-			return listAns;
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			return null;
-		}
+		// return listAns;
+		// } catch (IOException e) {
+		// logger.error(e.getMessage());
+		// return null;
+		// }
+
+		return null;
 
 	}
-	
+
 	public String featureTreeString(String project) {
-		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
-		
-		List<FeatureTreeDTO> tree = featureTree(project) ;
-		
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+		List<FeatureTreeDTO> tree = featureTree(project);
+
 		return gson.toJson(tree);
-		
+
 	}
 
 	public List<FeatureTreeDTO> featureTree(String project) {
 
-		List<FeatureTreeDTO> ans;
+		// List<FeatureTreeDTO> ans;
 
-		try {
-			String apiAns = client().get().uri("project-command/{project}/feature-tree", project).retrieve()
-					.bodyToMono(String.class).block();
-			
-			Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
+		// try {
+		// String apiAns = client().get().uri("project-command/{project}/feature-tree",
+		// project).retrieve()
+		// .bodyToMono(String.class).block();
 
-			List<FeatureTreeDTO> tree = gson.fromJson(apiAns, List.class) ;
-			
-			return tree ;
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create() ;
 
-		} catch (IOException e) {
-			logger.error("getting feature tree :" + e.getMessage());
-		}
+		// List<FeatureTreeDTO> tree = gson.fromJson(apiAns, List.class) ;
+
+		// return tree ;
+
+		// } catch (IOException e) {
+		// logger.error("getting feature tree :" + e.getMessage());
+		// }
 
 		return null;
 	}
-	
-	
+
 	public void organizeFeatureHyerachy(String parentID, String childID) {
-		
-		try {
-			String apiAns = client().post().uri("/feature-command/{parent}/adopt/{child}", parentID, childID).retrieve()
-					.bodyToMono(String.class).block();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		// try {
+		// String apiAns =
+		// client().post().uri("/feature-command/{parent}/adopt/{child}", parentID,
+		// childID).retrieve()
+		// .bodyToMono(String.class).block();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
 	}
 
 	public void create(Project project) {
-		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		
-		try {
-			String apiAns = client().post().uri("/projects")
-					.contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(project)
-					.retrieve()
-					.bodyToMono(String.class).block();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+		// try {
+		// String apiAns = client().post().uri("/projects")
+		// .contentType(MediaType.APPLICATION_JSON)
+		// .bodyValue(project)
+		// .retrieve()
+		// .bodyToMono(String.class).block();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
 	}
 
 }

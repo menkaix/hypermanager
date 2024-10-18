@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+// import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,67 +28,67 @@ public class StoryService {
 	@Autowired
 	private GoogleCloudAuthService auth;
 
-	private WebClient client() throws IOException {
+	// private WebClient client() throws IOException {
 
-		String url = env.getProperty("microservices.backlog.url");
+	// 	String url = env.getProperty("microservices.backlog.url");
 
-		logger.info(url);
+	// 	logger.info(url);
 
-		String token = auth.getIdentityToken(url);
+	// 	String token = auth.getIdentityToken(url);
 
-		WebClient client = WebClient.builder().baseUrl(url).defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-				.build();
+	// 	WebClient client = WebClient.builder().baseUrl(url).defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+	// 			.build();
 
-		return client;
-	}
+	// 	return client;
+	// }
 
 	public FullStoryDTO getTree(String storyID) {
-		try {
+		// try {
 
-			String ans = client().get().uri("story-command/{storyID}/tree", storyID).retrieve().bodyToMono(String.class)
-					.block();
+		// 	String ans = client().get().uri("story-command/{storyID}/tree", storyID).retrieve().bodyToMono(String.class)
+		// 			.block();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			FullStoryDTO objAns = gson.fromJson(ans, FullStoryDTO.class);
+		// 	FullStoryDTO objAns = gson.fromJson(ans, FullStoryDTO.class);
 
-			return objAns;
+		// 	return objAns;
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// } catch (IOException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 
 		return null;
 	}
 
 	public void update(FullStoryDTO storyDTO) {
 
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-		try {
-			String ans = client().post().uri("story-command/update")
-					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(gson.toJson(storyDTO)).retrieve().bodyToMono(String.class).block();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// 	String ans = client().post().uri("story-command/update")
+		// 			.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+		// 			.bodyValue(gson.toJson(storyDTO)).retrieve().bodyToMono(String.class).block();
+		// } catch (IOException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 
 	}
 
 	public void addFeature(FeatureDTO featureDTO) {
 
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-		try {
-			String ans = client().post().uri("/feature-command/{storyId}/add", featureDTO.storyId)
-					.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(gson.toJson(featureDTO)).retrieve().bodyToMono(String.class).block();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// 	String ans = client().post().uri("/feature-command/{storyId}/add", featureDTO.storyId)
+		// 			.accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+		// 			.bodyValue(gson.toJson(featureDTO)).retrieve().bodyToMono(String.class).block();
+		// } catch (IOException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 
 	}
 
