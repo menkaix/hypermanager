@@ -156,16 +156,22 @@ public class ProjectService {
 					.asString();
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			try{
+				Project[] projects = gson.fromJson(response.getBody(), Project[].class);
 
-			Project[] projects = gson.fromJson(response.getBody(), Project[].class);
-
-			ArrayList<Project> listAns = new ArrayList<Project>();
-			
-			for (Project project : projects) {
-				listAns.add(project);
+				ArrayList<Project> listAns = new ArrayList<Project>();
+				
+				for (Project project : projects) {
+					listAns.add(project);
+				}
+				return listAns;
 			}
-
-			return listAns;
+			catch(IllegalStateException e){
+				logger.error(e.getMessage()+" "+response.getBody());
+				
+			}
+			
+			
 
 		} catch (UnirestException e) {
 			
