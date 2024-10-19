@@ -155,8 +155,21 @@ public class ProjectService {
 					.header("x-api-key", env.getProperty("microservices.apikey"))
 					.asString();
 
+			logger.info("URL:'"+env.getProperty("microservices.backlog.url")+"'");
+			logger.info("API_KEY:'"+env.getProperty("microservices.apikey")+"'");
+			logger.info("status "+response.getStatus());
+			//logger.info(response.getBody());
+
+
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			try{
+
+				if(response.getStatus() < 200 || response.getStatus()>=300){
+					logger.error("fetching project list : status "+response.getStatus());
+					return Collections.EMPTY_LIST ;
+				}
+
+
 				Project[] projects = gson.fromJson(response.getBody(), Project[].class);
 
 				ArrayList<Project> listAns = new ArrayList<Project>();
@@ -166,7 +179,7 @@ public class ProjectService {
 				}
 				return listAns;
 			}
-			catch(IllegalStateException e){
+			catch(Exception e){
 				logger.error(e.getMessage()+" "+response.getBody());
 				
 			}
