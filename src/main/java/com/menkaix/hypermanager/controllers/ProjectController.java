@@ -44,6 +44,7 @@ public class ProjectController {
 		List<Project> projects = projectService.listProject() ;
 		
 		model.addAttribute("projects", projects);
+		model.addAttribute("project", new Project()) ;
         
         return "index-projects";
     }
