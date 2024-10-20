@@ -97,54 +97,34 @@ public class ProjectService {
 
 	public FullProjectDTO getTree(String project) {
 
-		// try {
+		Unirest.setTimeouts(0, 0);
+		try {
+			String stringUrl = env.getProperty("microservices.backlog.url")+"/project-command/"+ project +"/tree";
+			HttpResponse<String> response = Unirest.get(stringUrl)
+					.header("x-api-key", env.getProperty("microservices.apikey"))
+					.asString();
 
-		// String ans = client().get().uri("project-command/{project}/tree",
-		// project).retrieve()
-		// .bodyToMono(String.class).block();
+			if(response.getStatus() < 200 || response.getStatus()>=300){
+				logger.error("fetching project tree : status "+response.getStatus());
+				return null ;
+			}
 
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-		// FullProjectDTO objAns = gson.fromJson(ans, FullProjectDTO.class);
+			FullProjectDTO objAns = gson.fromJson(response.getBody(), FullProjectDTO.class);
 
-		// return distributeSpan(objAns);
+			return distributeSpan(objAns);
 
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 
-		return null;
+		} catch (UnirestException e) {
+			throw new RuntimeException(e);
+		}
+
+		//return null;
 	}
 
 	public List<Project> listProject() {
 
-		String ans;
-
-		// try {
-		// ans = client()
-		// .get()
-		// .uri("project-command/all")
-		// .retrieve()
-		// .bodyToMono(String.class)
-		// .block();
-
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-		// Project[] projects = gson.fromJson(ans, Project[].class);
-
-		// ArrayList<Project> listAns = new ArrayList<Project>();
-
-		// for (Project project : projects) {
-		// listAns.add(project);
-		// }
-
-		// return listAns;
-
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 
 		Unirest.setTimeouts(0, 0);
 		try {
