@@ -16,4 +16,4 @@ COPY  cloud-run-invoker.json /app/
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/cloud-run-invoker.json
 
 EXPOSE 8080
-CMD ["java","-Djava.security.egd=file:/dev/./urandom", "-jar","/app/spring-boot-application.jar"]
+CMD ["java", "-jar","/app/spring-boot-application.jar"]
