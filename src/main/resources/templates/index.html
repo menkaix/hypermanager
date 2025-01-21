@@ -4,8 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Google login demo</title>
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .panel {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .note-card {
+            background-color: yellow;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+    </style>
 </head>
 <body>
-<div>Hello <span th:text="|${name} (${email})|"></span></div>
+<div class="container">
+    <div class="panel" id="left-panel">
+        <h2>Notes</h2>
+        <div class="note-card">Note 1</div>
+        <div class="note-card">Note 2</div>
+        <!-- Add more note cards as needed -->
+    </div>
+    <div class="panel" id="middle-panel">
+        <h2>Chat with LLM</h2>
+        <form>
+            <textarea rows="10" cols="30" placeholder="Type your message here..."></textarea><br>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <div class="panel" id="right-panel">
+        <h2>Attachments</h2>
+        <ul>
+            <li>Attachment 1</li>
+            <li>Attachment 2</li>
+            <!-- Add more attachments as needed -->
+        </ul>
+        <form>
+            <input type="file"><br>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
