@@ -1,9 +1,10 @@
 .container {
     display: flex;
+    flex-wrap: wrap;
     height: 100vh;
 }
 .panel {
-    flex: 1;
+    flex: 1 1 100%;
     padding: 10px;
     border: 1px solid #ccc;
 }
@@ -25,4 +26,33 @@ header {
 }
 #chat-history {
     flex-grow: 1;
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 16px;
+}
+.chat-input-container {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+}
+.chat-input-container input {
+    flex-grow: 1;
+    margin-right: 8px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.chat-input-container button {
+    padding: 8px 16px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+@media (min-width: 768px) {
+    .panel {
+        flex: 1;
+    }
 }
