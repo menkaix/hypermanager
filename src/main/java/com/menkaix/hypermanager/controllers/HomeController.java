@@ -20,6 +20,12 @@ public class HomeController {
     public String home(Model model) {
 
         String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+
+        //forcing the base url to start with https:// if it starts with http://
+        if(baseURL.startsWith("http://")){
+            baseURL = baseURL.replace("http://", "https://");
+        }
+
         ConfigDTO config = new ConfigDTO(
                 baseURL,
                 "");
