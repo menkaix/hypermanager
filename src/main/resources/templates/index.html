@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google login demo</title>
+    <title>Hypermanager</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -48,6 +48,13 @@
     </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    // var someVariable = [[${someServerValue}]];
+    const base_url = '[[${config.getBaseURL()}]]';
+    const api_key = '[[${config.getApiKey()}]]'; // For string values
+</script>
 <script th:src="@{/js/scripts.js}"></script>
+<script th:src="@{/js/llm_chat.js}"></script>
 </body>
 </html>
