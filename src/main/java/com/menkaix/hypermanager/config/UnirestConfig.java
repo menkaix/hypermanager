@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import jakarta.annotation.PostConstruct;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.ObjectMapper;
 
@@ -12,10 +14,11 @@ import kong.unirest.core.ObjectMapper;
 public class UnirestConfig {
 
     public UnirestConfig() {
-        configureUnirestObjectMapper();
+        // configureUnirestObjectMapper();
     }
 
-    private void configureUnirestObjectMapper() {
+    @PostConstruct
+    public void configureUnirestObjectMapper() {
         Gson gson = gson();
         Unirest.config().setObjectMapper(new ObjectMapper() {
             @Override
