@@ -34,9 +34,9 @@ public class ChatService {
 
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
-            MediaType mediaType = MediaType.parse("application/json");
+            MediaType mediaType = MediaType.get("application/json");
             String json = gson.toJson(promptQueryDTO);
-            RequestBody body = RequestBody.create(mediaType, json);
+            RequestBody body = RequestBody.create(json, mediaType);
             Request request = new Request.Builder()
                     .url(serviceURL)
                     .method("POST", body)
