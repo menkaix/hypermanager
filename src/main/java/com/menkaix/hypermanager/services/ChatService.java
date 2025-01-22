@@ -34,8 +34,8 @@ public class ChatService {
 
             String json = new String(gson.toJson(promptQueryDTO).getBytes(), "UTF-8");
             HttpResponse<JsonNode> response = Unirest.post(serviceURL)
-                    .header("x-api-key", apiKey)
                     .header("Content-Type", "application/json; charset=UTF-8")
+                    .header("x-api-key", apiKey)
                     .body(json)
                     .asJson();
 
@@ -48,7 +48,7 @@ public class ChatService {
                 logger.info("Response Status: " + response.getStatus());
                 logger.info("Response Headers: " + response.getHeaders().toString());
                 logger.info("Response Body: " + response.getBody().toString());
-                logger.info("x-api-key: " + apiKey);
+                logger.info("x-api-key: [" + apiKey + "]");
 
                 LLMResponseDTO errans = new LLMResponseDTO();
                 errans.setError("Sorry, API returned error : " + response.getStatus() + " < " + json);
