@@ -29,6 +29,13 @@
                 const botMessage = response.data.message;
                 chatHistoryArray = response.data.history;
                 appendMessage('bot', botMessage);
+
+                //display in console error is not null or empty
+                if(response.data.error != null && response.data.error != ''){
+                    console.log(response.data.error);
+                }
+
+
             })
             .catch(error => {
                 console.error('Error:', error);
