@@ -7,7 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
 		"com.menkaix.hypermanager.config",
-		"com.menkaix.hypermanager.controllers" })
+		"com.menkaix.hypermanager.controllers",
+		"com.menkaix.hypermanager.services"
+})
 public class HypermanagerApplication {
 
 	public static void main(String[] args) {

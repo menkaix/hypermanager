@@ -17,7 +17,7 @@
             const userMessage = userInput.value;
             appendMessage('user', userMessage);
 
-            axios.post(base_url+'/discuss', {
+            axios.post(base_url+'/chat/discussion', {
                 prompt: userMessage,
                 history: chatHistoryArray
             }, {
