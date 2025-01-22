@@ -26,7 +26,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.konghq/unirest-java-core
 	implementation 'com.konghq:unirest-java-core:4.4.5'
 	// https://mvnrepository.com/artifact/com.konghq/unirest-object-mappers-gson
-	testImplementation 'com.konghq:unirest-object-mappers-gson:4.2.9'
+	implementation 'com.konghq:unirest-object-mappers-gson:4.2.9'
 
 
 
