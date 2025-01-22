@@ -18,7 +18,9 @@ public class HomeController {
     @GetMapping
     public String home(Model model) {
 
-        ConfigDTO config = new ConfigDTO(env.getProperty("baseURL"), env.getProperty("apiKey"));
+        ConfigDTO config = new ConfigDTO(
+                env.getProperty("microservices.assist.url"),
+                env.getProperty("microservices.apikey"));
 
 
         model.addAttribute("config", config);
