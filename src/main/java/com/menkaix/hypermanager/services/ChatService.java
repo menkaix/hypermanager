@@ -39,15 +39,17 @@ public class ChatService {
                     .body(json)
                     .asJson();
 
-            logger.info("Response Status: " + response.getStatus());
-            logger.info("Response Headers: " + response.getHeaders().toString());
-            logger.info("Response Body: " + response.getBody().toString());
-
             if (response.getStatus() == 200) {
                 String responseBody = response.getBody().toString();
                 LLMResponseDTO ans = gson.fromJson(responseBody, LLMResponseDTO.class);
                 return ans;
             } else {
+
+                logger.info("Response Status: " + response.getStatus());
+                logger.info("Response Headers: " + response.getHeaders().toString());
+                logger.info("Response Body: " + response.getBody().toString());
+                logger.info("x-api-key: " + apiKey);
+
                 LLMResponseDTO errans = new LLMResponseDTO();
                 errans.setError("Sorry, API returned error : " + response.getStatus() + " < " + json);
 
