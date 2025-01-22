@@ -3,7 +3,8 @@ package com.menkaix.hypermanager.models;
 public class PromptQueryDTO {
 
     private String prompt;
-    private MessageDTO[] history ;
+    private MessageDTO[] history;
+    private String path;
 
     public String getPrompt() {
         return prompt;
@@ -19,5 +20,13 @@ public class PromptQueryDTO {
 
     public void setHistory(MessageDTO[] history) {
         this.history = history;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

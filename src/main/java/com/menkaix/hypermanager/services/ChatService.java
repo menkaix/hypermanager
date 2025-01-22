@@ -35,7 +35,8 @@ public class ChatService {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
             MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType, gson.toJson(promptQueryDTO));
+            String json = gson.toJson(promptQueryDTO);
+            RequestBody body = RequestBody.create(mediaType, json);
             Request request = new Request.Builder()
                     .url(serviceURL)
                     .method("POST", body)
@@ -51,7 +52,7 @@ public class ChatService {
                 return ans;
             } else {
                 LLMResponseDTO errans = new LLMResponseDTO();
-                errans.setError("Sorry, API returned error : " + response.code());
+                errans.setError("Sorry, API returned error : " + response.code() + " < " + json);
 
                 return errans;
             }
