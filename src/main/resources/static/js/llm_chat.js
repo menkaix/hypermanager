@@ -4,26 +4,7 @@
 
 
     let chatHistoryArray = [];
-    let gcsPath = ''; // Store the GCS path
-
-    setGcsPathButton.addEventListener('click', () => {
-        try {
-            gcsPath = gcsPathInput.value.trim();
-            console.log("GCS Path set to:", gcsPath);
-        } catch (error) {
-            console.error('Error setting GCS path:', error);
-        }
-    });
-
-    gcsPathInput.addEventListener('input', () => {
-        try {
-            gcsPath = gcsPathInput.value.trim();
-            console.log("GCS Path set to:", gcsPath);
-        } catch (error) {
-            console.error('Error setting GCS path:', error);
-        }
-    });
-
+        
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
