@@ -33,7 +33,6 @@ public class UnirestConfig {
         });
     }
 
-    @Bean
     public Gson gson() {
         return new GsonBuilder().setPrettyPrinting().create();
     }
