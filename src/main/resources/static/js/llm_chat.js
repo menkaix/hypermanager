@@ -22,7 +22,7 @@
                 history: chatHistoryArray
             }, {
                 headers: {
-                    'x-api-key': api_key
+                    // 'x-api-key': api_key
                 }
             })
             .then(response => {
