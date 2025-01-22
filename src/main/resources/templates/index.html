@@ -4,28 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Google login demo</title>
-    <style>
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-        .panel {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-        .note-card {
-            background-color: yellow;
-            padding: 10px;
-            margin: 10px 0;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-        }
-        header {
-            padding: 10px;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ccc;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/static/css/styles.css}">
 </head>
 <body>
 <header>
@@ -66,5 +45,6 @@
         </form>
     </div>
 </div>
+<script th:src="@{/static/js/scripts.js}"></script>
 </body>
 </html>
