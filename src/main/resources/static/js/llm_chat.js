@@ -4,7 +4,7 @@
 
 
     let chatHistoryArray = [];
-        
+
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
@@ -19,8 +19,7 @@
 
             axios.post(base_url+'/discuss', {
                 prompt: userMessage,
-                history: chatHistoryArray,
-                path: gcsPath
+                history: chatHistoryArray
             }, {
                 headers: {
                     'x-api-key': api_key
