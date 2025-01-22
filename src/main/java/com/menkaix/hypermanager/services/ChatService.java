@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 public class ChatService {
 
@@ -34,10 +32,10 @@ public class ChatService {
 
         try {
 
-            String json = gson.toJson(promptQueryDTO);
+            String json = new String(gson.toJson(promptQueryDTO).getBytes(), "UTF-8");
             HttpResponse<JsonNode> response = Unirest.post(serviceURL)
                     .header("x-api-key", apiKey)
-                    .header("Content-Type", "application/json")
+                    .header("Content-Type", "application/json; charset=UTF-8")
                     .body(json)
                     .asJson();
 
