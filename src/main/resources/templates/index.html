@@ -11,7 +11,7 @@
 <div class="viewport-wrapper">
 <header>
     <label for="project-select">Select Project:</label>
-    <select id="project-select" th:field="*{selectedProject}">
+    <select id="project-select">
         <option th:each="project : ${projects.projects}" th:value="${project.id}" th:text="${project.name}"></option>
     </select>
 </header>
