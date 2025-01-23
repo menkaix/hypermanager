@@ -1,6 +1,9 @@
 package com.menkaix.hypermanager.controllers;
 
 import com.menkaix.hypermanager.models.ConfigDTO;
+import com.menkaix.hypermanager.models.project.ProjectHomeWrapperDTO;
+import com.menkaix.hypermanager.services.ProjectService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -16,8 +19,22 @@ public class HomeController {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private ProjectService projectService;
+
     @GetMapping
     public String home(Model model) {
+
+        ConfigDTO config = getConfig();
+        ProjectHomeWrapperDTO projects = projectService.getProjectsHome();
+
+        model.addAttribute("config", config);
+        model.addAttribute("projects", projects);
+
+        return "index";
+    }
+
+    private ConfigDTO getConfig() {
 
         String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 
@@ -30,8 +47,6 @@ public class HomeController {
                 baseURL,
                 "");
 
-        model.addAttribute("config", config);
-
-        return "index";
+        return config;
     }
 }

@@ -11,10 +11,8 @@
 <div class="viewport-wrapper">
 <header>
     <label for="project-select">Select Project:</label>
-    <select id="project-select">
-        <option value="project1">Project 1</option>
-        <option value="project2">Project 2</option>
-        <!-- Add more projects as needed -->
+    <select id="project-select" th:field="*{selectedProject}">
+        <option th:each="project : ${projects.projects}" th:value="${project.id}" th:text="${project.name}"></option>
     </select>
 </header>
 <div class="container">
