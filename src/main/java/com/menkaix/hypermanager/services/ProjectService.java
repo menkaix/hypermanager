@@ -3,9 +3,12 @@ package com.menkaix.hypermanager.services;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.menkaix.hypermanager.models.project.ProjectHomeWrapperDTO;
 import com.menkaix.hypermanager.models.project.ProjectSmallDTO;
 
+@Service
 public class ProjectService {
 
     public ProjectHomeWrapperDTO getProjectsHome() {
