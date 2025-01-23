@@ -1,10 +1,10 @@
-package com.menkaix.hypermanager.models;
+package com.menkaix.hypermanager.models.llm;
 
 public class LLMResponseDTO {
 
-    private MessageDTO[] history ;
-    private MessageDTO message ;
-    private String error ;
+    private MessageDTO[] history;
+    private MessageDTO message;
+    private String error;
 
     public MessageDTO[] getHistory() {
         return history;

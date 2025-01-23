@@ -1,8 +1,7 @@
 package com.menkaix.hypermanager.controllers;
 
-
-import com.menkaix.hypermanager.models.LLMResponseDTO;
-import com.menkaix.hypermanager.models.PromptQueryDTO;
+import com.menkaix.hypermanager.models.llm.LLMResponseDTO;
+import com.menkaix.hypermanager.models.llm.PromptQueryDTO;
 import com.menkaix.hypermanager.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,9 @@ public class ChatController {
 
         LLMResponseDTO ans = chatService.discussion(promptQueryDTO);
 
-        if(ans == null) {
+        if (ans == null) {
 
-            LLMResponseDTO errAns = new LLMResponseDTO() ;
+            LLMResponseDTO errAns = new LLMResponseDTO();
             errAns.setError("Sorry, I am not able to understand your query. Please try again.");
             return ResponseEntity.badRequest().body(errAns);
 
@@ -33,8 +32,5 @@ public class ChatController {
 
         return ResponseEntity.ok(ans);
     }
-
-
-
 
 }

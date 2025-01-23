@@ -2,8 +2,8 @@ package com.menkaix.hypermanager.services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.menkaix.hypermanager.models.LLMResponseDTO;
-import com.menkaix.hypermanager.models.PromptQueryDTO;
+import com.menkaix.hypermanager.models.llm.LLMResponseDTO;
+import com.menkaix.hypermanager.models.llm.PromptQueryDTO;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;

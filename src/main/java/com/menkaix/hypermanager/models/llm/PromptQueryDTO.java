@@ -1,4 +1,4 @@
-package com.menkaix.hypermanager.models;
+package com.menkaix.hypermanager.models.llm;
 
 public class PromptQueryDTO {
 

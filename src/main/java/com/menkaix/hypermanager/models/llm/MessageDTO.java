@@ -1,9 +1,9 @@
-package com.menkaix.hypermanager.models;
+package com.menkaix.hypermanager.models.llm;
 
 public class MessageDTO {
 
-    private String role ;
-    private String content ;
+    private String role;
+    private String content;
 
     public String getRole() {
         return role;
