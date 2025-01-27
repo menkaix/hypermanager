@@ -34,6 +34,7 @@ public class AttachmentService {
                     .field("destination_blob_name", projectCode + "/" + originalFile)
                     .asString();
             if (response.getStatus() == 200) {
+                logger.info("upload success: " + projectDataBucket + "/" + projectCode + "/" + originalFile);
                 return true;
             } else {
                 logger.error("Failed to upload file. Response code: " + response.getStatus());

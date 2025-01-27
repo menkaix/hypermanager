@@ -26,7 +26,7 @@ public class AttachmentController {
         if (attachmentService.upload(file, projectCode, originalFile)) {
             return ResponseEntity.ok("Uploaded");
         } else {
-            return ResponseEntity.badRequest().body("Failed to upload");
+            return ResponseEntity.internalServerError().body("Failed to upload");
         }
 
     }
