@@ -43,3 +43,4 @@ cloud-run-invoker.json
 /.idx
 key.json
  cloud-run-invoker.json
+.devcontainer/devcontainer.json
