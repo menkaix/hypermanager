@@ -1,5 +1,8 @@
 package com.menkaix.hypermanager.services;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +30,15 @@ public class AttachmentService {
 
         Unirest.setTimeouts(0, 0);
         try {
+
+            // Transforms the MultipartFile into a regular File
+            File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator")
+                    + file.getOriginalFilename());
+            file.transferTo(tmpFile);
+
             HttpResponse<String> response = Unirest.post(attachmentURL + "/upload")
                     .header("x-api-key", apikey)
-                    .field("file", file)
+                    .field("file", tmpFile)
                     .field("bucket_name", projectDataBucket)
                     .field("destination_blob_name", projectCode + "/" + originalFile)
                     .asString();
@@ -41,7 +50,13 @@ public class AttachmentService {
                 return false;
             }
         } catch (UnirestException e) {
-            logger.error("Exception on file upload ", e);
+            logger.error("UnirestException on file upload ", e);
+            return false;
+        } catch (IllegalStateException e) {
+            logger.error("IllegalStateException on file upload ", e);
+            return false;
+        } catch (IOException e) {
+            logger.error("IOException on file upload ", e);
             return false;
         }
 
