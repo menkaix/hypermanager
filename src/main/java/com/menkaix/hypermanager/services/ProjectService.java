@@ -1,30 +1,62 @@
 package com.menkaix.hypermanager.services;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.menkaix.hypermanager.models.project.ProjectFullDTO;
 import com.menkaix.hypermanager.models.project.ProjectHomeWrapperDTO;
 import com.menkaix.hypermanager.models.project.ProjectSmallDTO;
 
 @Service
 public class ProjectService {
 
+    private static Logger logger = LoggerFactory.getLogger(ProjectService.class);
+
+    @Autowired
+    private Environment env;
+
     public ProjectHomeWrapperDTO getProjectsHome() {
-        // TODO replace this place Holder
+
+        String backlogURL = env.getProperty("microservices.backlog.url");
+        String apikey = env.getProperty("microservices.apikey");
 
         ProjectHomeWrapperDTO projects = new ProjectHomeWrapperDTO();
-
         ArrayList<ProjectSmallDTO> projectArray = new ArrayList<ProjectSmallDTO>();
 
-        ProjectSmallDTO project1 = new ProjectSmallDTO("1", "Project 1", "P1");
-        ProjectSmallDTO project2 = new ProjectSmallDTO("2", "Project 2", "P2");
-        ProjectSmallDTO project3 = new ProjectSmallDTO("3", "Project 3", "P3");
+        Unirest.setTimeouts(0, 0);
+        try {
+            HttpResponse<String> response = Unirest
+                    .get(backlogURL + "/project-command/all")
+                    .header("x-api-key", apikey)
+                    .asString();
 
-        projectArray.add(project1);
-        projectArray.add(project2);
-        projectArray.add(project3);
+            ObjectMapper mapper = new ObjectMapper();
+            List<ProjectFullDTO> projectFullList = mapper.readValue(response.getBody(),
+                    new TypeReference<List<ProjectFullDTO>>() {
+                    });
+
+            for (ProjectFullDTO projectFull : projectFullList) {
+                ProjectSmallDTO projectSmall = new ProjectSmallDTO(projectFull.getId(), projectFull.getName(),
+                        projectFull.getCode());
+                projectArray.add(projectSmall);
+            }
+
+        } catch (UnirestException | IOException e) {
+            logger.error("Exception on getProjectsHome ", e);
+        }
 
         projects.setProjects(projectArray);
 
