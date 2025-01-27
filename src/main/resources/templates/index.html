@@ -11,8 +11,8 @@
 <div class="viewport-wrapper">
 <header>
     <label for="project-select">Select Project:</label>
-    <select id="project-select">
-        <option th:each="project : ${projects.projects}" th:value="${project.id}" th:text="${project.name}"></option>
+    <select id="project-select" onchange="updateProjectCode()">
+        <option th:each="project : ${projects.projects}" th:value="${project.code}" th:text="${project.name}"></option>
     </select>
 </header>
 <div class="container">
@@ -39,9 +39,9 @@
             <li>Attachment 2</li>
             <!-- Add more attachments as needed -->
         </ul>
-        <form>
-            <input type="file"><br>
-            <button type="submit">Upload</button>
+        <form id="upload-form">
+            <input type="file" id="file-input"><br>
+            <button type="button" id="upload-button">Upload</button>
         </form>
     </div>
 </div>
@@ -52,8 +52,11 @@
     // var someVariable = [[${someServerValue}]];
     const base_url = '[[${config.getBaseURL()}]]';
     const api_key = '[[${config.getApiKey()}]]'; // For string values
+
+   
 </script>
 <script th:src="@{/js/scripts.js}"></script>
 <script th:src="@{/js/llm_chat.js}"></script>
+<script th:src="@{/js/upload_manager.js}"></script>
 </body>
 </html>
