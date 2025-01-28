@@ -14,5 +14,3 @@ function updateProjectCode() {
     projectCode = projectSelect.value;
     console.log('Project code updated to:', projectCode);
 }
-
-// Add your JavaScript code here

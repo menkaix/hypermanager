@@ -21,7 +21,7 @@ function sendMessage() {
             history: chatHistoryArray
         }, {
             headers: {
-                // 'x-api-key': api_key
+                'Authorization': `Bearer ${api_key}`
             }
         })
         .then(response => {
