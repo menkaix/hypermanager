@@ -17,11 +17,11 @@ document.getElementById('upload-button').addEventListener('click', async () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            alert(response.data);
+            M.toast({html: response.data});
         } catch (error) {
-            alert('Failed to upload');
+            M.toast({html: 'Failed to upload'});
         }
     } else {
-        alert('Please select a file');
+        M.toast({html: 'Please select a file'});
     }
 });

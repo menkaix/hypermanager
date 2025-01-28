@@ -5,7 +5,7 @@
     overflow: auto;
 }
 .note-card {
-    background-color: yellow;
+    background-color: #ffeb3b;
     padding: 10px;
     margin: 10px 0;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
@@ -38,7 +38,6 @@ header {
     height: 100%;
 }
 #chat-history {
-    
     height: 400px;
     overflow-y: auto;
     border: 1px solid #ccc;
@@ -63,4 +62,16 @@ header {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+.progress {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.determinate {
+    background-color: #2196f3;
+    height: 100%;
+    transition: width 0.4s linear;
 }
