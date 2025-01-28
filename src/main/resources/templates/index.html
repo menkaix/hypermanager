@@ -8,6 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- setting variable from java and thymleaf, please do not remove -->
+    <script>
+        const base_url = '[[${config.getBaseURL()}]]';
+        const api_key = '[[${config.getApiKey()}]]';
+    </script>
+
 </head>
 <body>
 <div class="viewport-wrapper">
