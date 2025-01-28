@@ -14,8 +14,8 @@ document.getElementById('upload-button').addEventListener('click', async () => {
         try {
             const response = await axios.post(`${base_url}/attachment/upload`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${api_key}`
+                    'Content-Type': 'multipart/form-data'
+                    
                 },
                 onUploadProgress: function(progressEvent) {
                     const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
